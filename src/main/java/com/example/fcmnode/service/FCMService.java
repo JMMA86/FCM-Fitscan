@@ -25,8 +25,18 @@ public class FCMService {
     private String KEY_FILE_NAME;
 
     public String getAccessToken() throws IOException {
-        ClassPathResource resource = new ClassPathResource(KEY_FILE_NAME);
-        InputStream inputStream = resource.getInputStream();
+        InputStream inputStream;
+        
+        // Verificar si es contenido JSON (comienza con '{') o nombre de archivo
+        if (KEY_FILE_NAME.trim().startsWith("{")) {
+            // Es contenido JSON directo
+            inputStream = new ByteArrayInputStream(KEY_FILE_NAME.getBytes());
+        } else {
+            // Es nombre de archivo
+            ClassPathResource resource = new ClassPathResource(KEY_FILE_NAME);
+            inputStream = resource.getInputStream();
+        }
+        
         GoogleCredentials googleCredentials = GoogleCredentials
                 .fromStream(inputStream)
                 .createScoped(List.of("https://www.googleapis.com/auth/firebase.messaging"));
@@ -52,6 +62,4 @@ public class FCMService {
             throw new IOException("HTTP Error: " + response.getStatusCode() + ", " + response.getBody());
         }
     }
-
-
 }
