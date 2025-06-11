@@ -34,3 +34,6 @@ build/
 
 ### fcmkey ###
 src/main/resources/fcmkey.json
+
+### Environment files ###
+.env
