@@ -1,0 +1,13 @@
+# Render.com deployment configuration
+
+# Build Command
+build: ./render-build.sh
+
+# Start Command  
+start: ./start.sh
+
+# Environment
+runtime: docker
+
+# Port (Spring Boot default)
+port: 8080
